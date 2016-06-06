@@ -67,34 +67,64 @@
 			attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			subdomains: 'abcd',
 			minZoom: 0,
-			maxZoom: 25,
+			maxZoom: 20,
 			ext: 'png'
 		});
 		tiles.addTo(map);
 		map.addLayer(tiles);
-		// load GeoJSON from an external file
-		
-		function loadData() {
+
+
+		// use JQuery to load GeoJSON from an external file
 		$.getJSON("B_winter_park_clean.geojson", function (data) {
 			// add GeoJSON layer to the map once the file is loaded
-			//L.geoJson(data).addTo(map);
+			//			console.log(data);
 
 
-					var B_winter = L.geoJson(data, {
-						pointToLayer: function (feature, latlng) {
-							var circle = L.circle(latlng, 2, {
-									color:'blue',
-									fillColor: "blue",
-							});
-							return circle;
-						}
+			dataLayer = L.geoJson(data, {
+				pointToLayer: function (feature, latlng) {
+					var circle = L.circle(latlng, 2, {
+						color: 'blue',
+						fillColor: "blue",
 					});
-					var clusters = L.markerClusterGroup();
-					clusters.addLayer(B_winter);
-					map.addLayer(clusters);
+					return circle;
+				}
+			});
+			var clusters = L.markerClusterGroup({
+				spiderfyOnMaxZoom: false,
+				showCoverageOnHover: true,
+				zoomToBoundsOnClick: false
+			});
+			clusters.on('clusterclick', function (a) {
+				var html = 'hello';
+				var markers = a.layer.getAllChildMarkers();
+				for (var i = 0; i < markers.length; i++) {
+					var name = markers[i].options.name + '<br>';
+					html += name;
+				}
+				map.openPopup(html, a.layer.getLatLng());
+			});
+			clusters.addLayer(dataLayer);
+			map.addLayer(clusters);
+			//colorCircles();
 		});
-		}
-		loadData();
+
+
+		//		function colorCircles() {
+		//			//loop through each "layer" (circle) to access attribute info
+		//				dataLayer.eachLayer(function (layer) {
+		//					layer.setStyle({
+		//						fillColor:getColor
+		//					})
+		//
+		//					if (layer.feature.properties);
+		//
+		//				});
+		//
+		//			} // end colorCircles()
+		//		
+		//		function getColor(){
+		//			
+		//		}
 	</script>
 
 
