@@ -67,12 +67,14 @@
 			attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			subdomains: 'abcd',
 			minZoom: 0,
-			maxZoom: 200,
+			maxZoom: 25,
 			ext: 'png'
 		});
 		tiles.addTo(map);
 		map.addLayer(tiles);
 		// load GeoJSON from an external file
+		
+		function loadData() {
 		$.getJSON("B_winter_park_clean.geojson", function (data) {
 			// add GeoJSON layer to the map once the file is loaded
 			//L.geoJson(data).addTo(map);
@@ -80,16 +82,19 @@
 
 					var B_winter = L.geoJson(data, {
 						pointToLayer: function (feature, latlng) {
-							var marker = L.marker(latlng, {
-								
+							var circle = L.circle(latlng, 2, {
+									color:'blue',
+									fillColor: "blue",
 							});
-							return marker;
+							return circle;
 						}
 					});
 					var clusters = L.markerClusterGroup();
 					clusters.addLayer(B_winter);
 					map.addLayer(clusters);
 		});
+		}
+		loadData();
 	</script>
 
 
