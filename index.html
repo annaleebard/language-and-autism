@@ -98,8 +98,9 @@
 				var html = 'hello';
 				var markers = a.layer.getAllChildMarkers();
 				for (var i = 0; i < markers.length; i++) {
-					var name = markers[i].options.name + '<br>';
-					html += name;
+					var totals = markers[i].feature.properties['Word_Y_N'] + '<br>';
+					html += totals;
+					console.log(markers[i].feature.properties);
 				}
 				map.openPopup(html, a.layer.getLatLng());
 			});
