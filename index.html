@@ -29,9 +29,8 @@
 			position: absolute;
 			top: 0;
 			bottom: 0;
-			width: 100%;
-			width: 100%;
-			right: 0px
+			width: 70%;
+			left: 0px
 		}
 		
 		h1 {
@@ -52,12 +51,74 @@
 			font-size: 1.2em;
 			text-align: left;
 		}
+		
+		#side-panel {
+			position: absolute;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			width: 30%;
+			background: whitesmoke;
+			border-right: 2px solid #0B486B;
+			overflow-y: scroll;
+		}
+		
+		h1 {
+			padding: 8px 25px 8px 15px;
+			margin: 0;
+			background: #0B486B;
+			color: "whitesmoke";
+			font-weight: 400;
+			font-size: 1.5em;
+			text-align: left;
+			font-family: Montserrat;
+		}
+		
+		h2 {
+			margin: 0;
+			padding: 8px 25px 8px 15px;
+			color: #0B486B;
+			font-weight: 500;
+			font-size: 1.2em;
+			text-align: left;
+			font-family: Montserrat;
+		}
+		
+		#side-panel p {
+			margin: 8px 0 4px;
+			padding: 0 25px 0 15px;
+			color: #3d3d3d;
+			text-align: left;
+			font-size: 1em;
+		}
+		
+		#side-panel p:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		
+		#side-panel img {
+			float: right;
+			margin: 0 0 15px 15px;
+		}
 	</style>
 </head>
 
 <body>
 	<div id='map'></div>
-
+	<div id='side-panel'>
+		<h1>Language and Autism</h1>
+		<h2>Young Children and Community Activity</h2>
+		<p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development.
+		</p>
+		<!--<p><img src="images/legend.png" alt="legend"></p>-->
+		<p></p>
+		<h2>About this map</h2>
+		<p>This map visualizes languge a child with Autism experiences throughout a typical day with her family. </p>
+		<h2>About the data</h2>
+		<p> This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD. </p>
+	</div>
 	<script>
 		var map = L.map('map', {
 			center: [28.71, -81.32],
@@ -67,12 +128,15 @@
 			attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			subdomains: 'abcd',
 			minZoom: 0,
-			maxZoom: 20,
+			maxZoom: 30,
 			ext: 'png'
 		});
 		tiles.addTo(map);
 		map.addLayer(tiles);
 
+
+
+		var dataLayer
 
 		// use JQuery to load GeoJSON from an external file
 		$.getJSON("B_winter_park_clean.geojson", function (data) {
@@ -85,47 +149,67 @@
 					var circle = L.circle(latlng, 2, {
 						color: 'blue',
 						fillColor: "blue",
-					});
+						opacity: .6,
+						weight: 0
+					})
 					return circle;
 				}
-			});
+			}).addTo(map);
+			//create clusters
+
+
 			var clusters = L.markerClusterGroup({
+				//disable options to allow popup at click
+				disableClusteringAtZoom: 19,
 				spiderfyOnMaxZoom: false,
 				showCoverageOnHover: true,
 				zoomToBoundsOnClick: false
 			});
+
 			clusters.on('clusterclick', function (a) {
-				var html = 'hello';
+
+				var html = 'Total:<br>';
+
 				var markers = a.layer.getAllChildMarkers();
+
 				for (var i = 0; i < markers.length; i++) {
-					var totals = markers[i].feature.properties['Word_Y_N'] + '<br>';
+					var totals = markers[i].feature.properties['Word_Y_N'];
 					html += totals;
-					console.log(markers[i].feature.properties);
+					console.log(totals);
+
 				}
+
 				map.openPopup(html, a.layer.getLatLng());
 			});
+
 			clusters.addLayer(dataLayer);
 			map.addLayer(clusters);
-			//colorCircles();
+			colorCircles();
 		});
 
 
-		//		function colorCircles() {
-		//			//loop through each "layer" (circle) to access attribute info
-		//				dataLayer.eachLayer(function (layer) {
-		//					layer.setStyle({
-		//						fillColor:getColor
-		//					})
-		//
-		//					if (layer.feature.properties);
-		//
-		//				});
-		//
-		//			} // end colorCircles()
-		//		
-		//		function getColor(){
-		//			
-		//		}
+
+		function colorCircles() {
+			//loop through each "layer" (circle) to access attribute info
+			dataLayer.eachLayer(function (layer) {
+					console.log(layer.feature.properties);
+
+					layer.setStyle({
+							fillColor:getColor(layer.feature.properties["CHN_Y_N"])
+					})
+					getColor();
+			});
+		//console.log(dataLayer);
+
+
+		} // end colorCircles()
+
+		function getColor(d) {
+				if (d == "Y") {
+					return "red";
+				}
+			
+		}
 	</script>
 
 
