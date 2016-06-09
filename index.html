@@ -173,7 +173,7 @@
 				var markers = a.layer.getAllChildMarkers();
 
 				for (var i = 0; i < markers.length; i++) {
-					var totals = markers[i].feature.properties['Word_Y_N'];
+					var totals = markers[i].feature.properties['adult'];
 					html += totals;
 					console.log(totals);
 
@@ -195,7 +195,7 @@
 					//console.log(layer.feature.properties);
 
 					layer.setStyle({
-							fillColor:getColor(layer.feature.properties["CHN_Y_N"])
+							fillColor:getColor(layer.feature.properties["child"])
 					})
 					getColor();
 			});
@@ -204,7 +204,7 @@
 
 		
 		function getColor(d) {
-				if (d == "Y") {
+				if (d == "1") {
 					return '#009966';
 				}
 			
