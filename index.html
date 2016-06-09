@@ -168,7 +168,7 @@
 
 			clusters.on('clusterclick', function (a) {
 
-				var html = 'Total:<br>';
+				var html = 'Total Adult Vocalizations:<br>';
 
 				var markers = a.layer.getAllChildMarkers();
 
@@ -184,7 +184,7 @@
 
 			clusters.addLayer(dataLayer);
 			map.addLayer(clusters);
-			colorCircles();
+			colorCircles(); 
 		});
 
 
@@ -192,21 +192,20 @@
 		function colorCircles() {
 			//loop through each "layer" (circle) to access attribute info
 			dataLayer.eachLayer(function (layer) {
-					console.log(layer.feature.properties);
+					//console.log(layer.feature.properties);
 
 					layer.setStyle({
 							fillColor:getColor(layer.feature.properties["CHN_Y_N"])
 					})
 					getColor();
 			});
-		//console.log(dataLayer);
-
 
 		} // end colorCircles()
 
+		
 		function getColor(d) {
 				if (d == "Y") {
-					return "red";
+					return '#009966';
 				}
 			
 		}
