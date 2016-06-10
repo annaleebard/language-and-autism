@@ -168,17 +168,23 @@
 
 			clusters.on('clusterclick', function (a) {
 
-				var html = 'Total Adult Vocalizations:<br>';
-
 				var markers = a.layer.getAllChildMarkers();
-
+  
+                // variables to hold our count
+                var adult = 0, child = 0;
+                
+                // loop through and add up the counts
 				for (var i = 0; i < markers.length; i++) {
-					var totals = markers[i].feature.properties['adult'];
-					html += totals;
-					console.log(totals);
+					adult += markers[i].feature.properties['adult'];
+                    child += markers[i].feature.properties['child'];
 
 				}
+                
+                // build popup
+                var html = 'Total Adult Vocalizations: ' + adult + '<br>' + 
+                           'Total Child Vocalizations: ' + child
 
+                // add popup and open
 				map.openPopup(html, a.layer.getLatLng());
 			});
 
