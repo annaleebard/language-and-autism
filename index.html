@@ -16,6 +16,10 @@
 
 	<link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
 	<style>
@@ -29,8 +33,9 @@
 			position: absolute;
 			top: 0;
 			bottom: 0;
-			width: 70%;
-			left: 0px
+			width: 100%;
+			left: 0px;
+			z-index: 1;
 		}
 		
 		h1 {
@@ -40,15 +45,6 @@
 			color: whitesmoke;
 			font-weight: 400;
 			font-size: 1.5em;
-			text-align: left;
-		}
-		
-		h2 {
-			margin: 0;
-			padding: 8px 25px 8px 15px;
-			color: #1C9976;
-			font-weight: 500;
-			font-size: 1.2em;
 			text-align: left;
 		}
 		
@@ -76,12 +72,26 @@
 		
 		h2 {
 			margin: 0;
-			padding: 8px 25px 8px 15px;
+			padding: 8px 0px 8px 0px;
 			color: #0B486B;
 			font-weight: 500;
-			font-size: 1.2em;
-			text-align: left;
+			font-size: 1.3em;
+			text-align: center;
 			font-family: Montserrat;
+			font-weight: bold
+		}
+		
+		.container {
+			right: 50px;
+			width: 250px;
+			top: 15px;
+			padding: 5px 5px 8px 5px;
+			background: #ecf0f1;
+			opacity: .95;
+			border: 2px solid #0B486B;
+			z-index: 5;
+			position: absolute;
+			border-radius: 5px;
 		}
 		
 		#side-panel p {
@@ -102,120 +112,153 @@
 			float: right;
 			margin: 0 0 15px 15px;
 		}
+		
+		.btn {
+			padding: 10px 50px;
+			margin: 5px;
+			border: 0 none;
+			font-weight: 700;
+			letter-spacing: 1px;
+			float: inherit;
+			background: #e74c3c;
+		}
+		
+		
 	</style>
 </head>
 
 <body>
+	
+	
+	<div id='about-button' class="container">
+		<h2>Language and Autism</h2>
+		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo"><span>About this map</span>
+		</button>
+		<div id="demo" class="collapse">
+			Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family.
+		</div>
+	</div>
+
 	<div id='map'></div>
+	<!--
 	<div id='side-panel'>
 		<h1>Language and Autism</h1>
 		<h2>Young Children and Community Activity</h2>
 		<p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development.
 		</p>
-		<!--<p><img src="images/legend.png" alt="legend"></p>-->
+		<p><img src="images/legend.png" alt="legend">
+		</p>
 		<p></p>
 		<h2>About this map</h2>
 		<p>This map visualizes languge a child with Autism experiences throughout a typical day with her family. </p>
 		<h2>About the data</h2>
 		<p> This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD. </p>
 	</div>
+-->
+
 	<script>
-		var map = L.map('map', {
-			center: [28.71, -81.32],
-			zoom: 12
-		})
-		var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
-			attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-			subdomains: 'abcd',
-			minZoom: 0,
-			maxZoom: 30,
-			ext: 'png'
-		});
-		tiles.addTo(map);
-		map.addLayer(tiles);
-
-
-
-		var dataLayer
-
-		// use JQuery to load GeoJSON from an external file
-		$.getJSON("B_winter_park_clean.geojson", function (data) {
-			// add GeoJSON layer to the map once the file is loaded
-			//			console.log(data);
-
-
-			dataLayer = L.geoJson(data, {
-				pointToLayer: function (feature, latlng) {
-					var circle = L.circle(latlng, 2, {
-						color: 'blue',
-						fillColor: "blue",
-						opacity: .6,
-						weight: 0
-					})
-					return circle;
-				}
-			}).addTo(map);
-			//create clusters
-
-
-			var clusters = L.markerClusterGroup({
-				//disable options to allow popup at click
-				disableClusteringAtZoom: 19,
-				spiderfyOnMaxZoom: false,
-				showCoverageOnHover: true,
-				zoomToBoundsOnClick: false
-			});
-
-			clusters.on('clusterclick', function (a) {
-
-				var markers = a.layer.getAllChildMarkers();
-  
-                // variables to hold our count
-                var adult = 0, child = 0;
-                
-                // loop through and add up the counts
-				for (var i = 0; i < markers.length; i++) {
-					adult += markers[i].feature.properties['adult'];
-                    child += markers[i].feature.properties['child'];
-
-				}
-                
-                // build popup
-                var html = 'Total Adult Vocalizations: ' + adult + '<br>' + 
-                           'Total Child Vocalizations: ' + child
-
-                // add popup and open
-				map.openPopup(html, a.layer.getLatLng());
-			});
-
-			clusters.addLayer(dataLayer);
-			map.addLayer(clusters);
-			colorCircles(); 
-		});
-
-
-
-		function colorCircles() {
-			//loop through each "layer" (circle) to access attribute info
-			dataLayer.eachLayer(function (layer) {
-					//console.log(layer.feature.properties);
-
-					layer.setStyle({
-							fillColor:getColor(layer.feature.properties["child"])
-					})
-					getColor();
-			});
-
-		} // end colorCircles()
-
+				var map = L.map('map', {
+					center: [28.71, -81.32],
+					zoom: 12
+				})
+				var tiles = L.tileLayer('http://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
+					attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				});
+				tiles.addTo(map);
+				map.addLayer(tiles);
 		
-		function getColor(d) {
-				if (d == "1") {
-					return '#009966';
+				var dataLayer
+		
+				// use JQuery to load GeoJSON from an external file
+				$.getJSON("B_winter_park_clean.geojson", function (data) {
+					// add GeoJSON layer to the map once the file is loaded
+					//			console.log(data);
+		
+		
+					dataLayer = L.geoJson(data, {
+						pointToLayer: function (feature, latlng) {
+							var circle = L.circle(latlng, 2, {
+								color: 'blue',
+								fillColor: "blue",
+								opacity: .6,
+								weight: 0
+							})
+							return circle;
+						}
+					}).addTo(map);
+					
+					
+					//create clusters
+		
+					var clusters = L.markerClusterGroup({
+						//disable options to allow popup at click
+						disableClusteringAtZoom: 19,
+						spiderfyOnMaxZoom: false,
+						showCoverageOnHover: true,
+						zoomToBoundsOnClick: true
+					});
+		
+					clusters.on('clustermouseover', function (a) {
+						var markers = a.layer.getAllChildMarkers();
+						// variables to hold our count
+						var adult = 0,
+							child = 0,
+							peer = 0,
+							convoTurn = 0;
+		
+						// loop through and add up the counts
+						for (var i = 0; i < markers.length; i++) {
+							adult += markers[i].feature.properties['adult'];
+							child += markers[i].feature.properties['child'];
+							peer += markers[i].feature.properties['peer'];
+							convoTurn += markers[i].feature.properties['convoTurn'];
+						}
+		
+						// build popup
+						var html = 'Total Vocalizations:' + '<br>' +
+							'Adult: ' + adult + '<br>' +
+							'Child: ' + child + '<br>' +
+							'Peer:  ' + peer + '<br>' +
+							'Conversation Turn:  ' + convoTurn;
+						// add popup and open
+						//console.log(a.layer)
+						map.openPopup(html, a.layer.getLatLng());
+					});
+		
+					clusters.addLayer(dataLayer);
+					map.addLayer(clusters);
+					colorCircles();
+		
+				});
+		
+				function colorCircles() {
+						//loop through each "layer" (circle) to access attribute info
+						dataLayer.eachLayer(function (layer) {
+							//console.log(layer.feature.properties);
+		
+							layer.setStyle({
+								fillColor: getColor(layer.feature.properties["child"])
+							})
+							getColor();
+						});
+		
+					} // end colorCircles()
+		
+		
+				function getColor(d) {
+					if (d == "1") {
+						return '#009966';
+					}
+		
 				}
-			
-		}
+		
+				
+		
 	</script>
+</body>
+
+</html>
+</script>
 
 
 </body>
