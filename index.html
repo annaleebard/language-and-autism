@@ -24,6 +24,17 @@
 
 
 	<style>
+        .legend label,
+        .legend span {
+            display: block;
+            float: left;
+            height: 15px;
+            width: 20%;
+            text-align: center;
+            font-size: 9px;
+            color: #808080;
+        }
+        
         .mycluster {
 			width: 70px;
 			height: 70px;
@@ -114,7 +125,7 @@
         
         .adultsparks{
             left: 50px;
-			width: 1000px;
+			width: 1050px;
 			bottom: 15px;
 			padding: 5px 5px 8px 5px;
 			background: #ecf0f1;
@@ -126,7 +137,37 @@
             overflow-x: scroll;
             
         }
-		
+		#legend span {
+        display: block;
+        border-radius: 50%;
+        float: right;
+        height: 20px;
+        width: 20px;
+        text-align: right;
+        color: #047d50;
+        margin-right: 10px;
+        border: 2px solid #0B486B;
+            color: #0B486B;
+    }
+        #legend {
+            border: 3px solid #047d50;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            padding: 5px 5px 8px 5px;
+             background: #ecf0f1;
+			opacity: .95;
+			border: 2px solid #0B486B;
+			z-index: 5;
+			position: absolute;
+            border-radius:5px;
+            color: #047d50;
+            width: 180px;
+            opacity: .9;
+            z-index: 7;
+            color: #0B486B;
+
+        }
 		#side-panel p {
 			margin: 8px 0 4px;
 			padding: 0 25px 0 15px;
@@ -190,13 +231,23 @@
 			
 		<div id="demo" class="collapse">
             <p>About this Map:</p> 
-            <p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family.</p>
-		</div>
+            <p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family. </p>
+		</div>  
 	</div>
-
+<div id="legend">
+        
+      <h4>Health Spending by County per Capita (Kenyan Shilling)</h4>
+        
+        <p class="one"><span class="square" style='background:#16A085;'></span>
+            <label> Adult Vocalization</label>
+        </p>
+        <p class="two"><span class="square" style='background:#EC644B;'></span>
+            <label> Child Vocalization</label>
+        </p>
+        </div>
 	<div id=sparks class= adultsparks>
         <span id="sparkline"></span>
-        <h3>Grocery Store &nbsp &nbsp &nbsp &nbsp Park &nbsp &nbsp &nbsp &nbsp    Home   &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Friend's Home----   </h3>
+        <h3>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Park &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp     Child's Home   &nbsp &nbsp &nbsp &nbsp Friend's Home &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  Grocery Store &nbsp &nbsp &nbsp &nbsp   </h3>
 	</div>
 	</p>
 	<div id='map'></div>
