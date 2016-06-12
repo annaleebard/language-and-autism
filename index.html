@@ -25,11 +25,11 @@
 
 	<style>
         .mycluster {
-			width: 40px;
-			height: 40px;
+			width: 70px;
+			height: 70px;
 			background-color:#3498db;
 			text-align: center;
-			font-size: 24px;
+			font-size: 18px;
             border-radius: 50%;
             border-color: #0B486B;
             color: whitesmoke;
@@ -248,10 +248,8 @@
 			     iconCreateFunction: function (cluster) {
 				var markers = cluster.getAllChildMarkers();
 				var n = 0;
-                     console.log(markers);
 				for (var i = 0; i < markers.length; i++) {
 					n = markers.length;
-                    console.log(markers.length);
 				}
 				return L.divIcon({ html: n, className: 'mycluster', iconSize: L.point(40, 40) });
 			},
