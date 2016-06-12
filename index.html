@@ -248,13 +248,15 @@
 			     iconCreateFunction: function (cluster) {
 				var markers = cluster.getAllChildMarkers();
 				var n = 0;
-				for (var i = 0; i < clusters.length; i++) {
-					n += markers[i].number;
+                     console.log(markers);
+				for (var i = 0; i < markers.length; i++) {
+					n = markers.length;
+                    console.log(markers.length);
 				}
 				return L.divIcon({ html: n, className: 'mycluster', iconSize: L.point(40, 40) });
 			},
 			//Disable all of the defaults:
-			spiderfyOnMaxZoom: false, showCoverageOnHover: false, zoomToBoundsOnClick: false
+			spiderfyOnMaxZoom: false, showCoverageOnHover: true, zoomToBoundsOnClick: true
 		});
 
 			clusters.on('clustermouseover', function (a) {
@@ -287,7 +289,7 @@
 					'Child: ' + child + '<br>' +
 					'Peer:  ' + peer + '<br>' +
 					'Conversation Turn:  ' + convoTurn +'<br>' +
-					'Child to Adult Vocalization Ratio: ' + ratio
+					'Child to Adult Vocalization Ratio: ' + ratio.toLocaleString();
 				// add popup and open
 				//console.log(a.layer)
 				map.openPopup(html, a.layer.getLatLng());
