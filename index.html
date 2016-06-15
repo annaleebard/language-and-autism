@@ -271,14 +271,26 @@
 				for (var i = 0; i < markers.length; i++) {
 					n = markers.length;
 				}
-				return L.divIcon({ html: n, className: 'mycluster', iconSize: L.point(40, 40) });
+				return L.divIcon({
+					html: n, 
+					className: 'mycluster', 
+					iconSize: L.point(40, 40) });
 			},
+				
 			//Disable all of the defaults:
-			spiderfyOnMaxZoom: false, showCoverageOnHover: true, zoomToBoundsOnClick: true
+				spiderfyOnMaxZoom: false, 
+				showCoverageOnHover: true, 
+				zoomToBoundsOnClick: true,
+				polygonOptions: {
+					color: '#EC644B', 
+					stroke: 1, 
+					fillOpacity:.7
+				}
 		});
 
 			clusters.on('clustermouseover', function (a) {
 				var markers = a.layer.getAllChildMarkers();
+				
 				// variables to hold our count
 				var adult = 0,
 					child = 0,
@@ -311,6 +323,7 @@
 				// add popup and open
 				//console.log(a.layer)
 				map.openPopup(html, a.layer.getLatLng());
+				
 			});
 
 			clusters.addLayer(dataLayer);
@@ -318,6 +331,7 @@
 			colorCircles();
 
 		});
+		
 
 		function colorCircles() {
 				//loop through each "layer" (circle) to access attribute info
