@@ -21,8 +21,8 @@
         .legend label,
         .legend span {
             display: block;
-            float: left;
-            height: 15px;
+            float: center;
+            height: 10px;
             width: 20%;
             text-align: center;
             font-size: 9px;
@@ -60,7 +60,9 @@
 			z-index: 1;
 		}
 		
-		
+		p {
+			padding: 0px 0px 0px 0px;
+		}
 		h1 {
 			padding: 8px 25px 8px 15px;
 			margin: 0;
@@ -92,6 +94,16 @@
 			font-family: Montserrat;
 			font-weight: bold
         }
+		h4 {
+			margin: 0;
+			padding: 0px 0px 0px 0px;
+			color: #0B486B;
+			font-weight: 500;
+			font-size: 1.3em;
+			text-align: center;
+			font-family: Montserrat;
+			font-weight: bold
+		}
 		
 		.container {
 			right: 50px;
@@ -108,9 +120,10 @@
         
         .adultsparks{
             left: 50px;
-			width: 1050px;
+			width: 1180px;
+			height: 90px;
 			bottom: 15px;
-			padding: 5px 5px 8px 5px;
+			padding: 2px 2px 2px 2px;
 			background: #ecf0f1;
 			opacity: .95;
 			border: 2px solid #0B486B;
@@ -135,40 +148,22 @@
         #legend {
             border: 3px solid #047d50;
             position: absolute;
-            right: 10px;
-            bottom: 10px;
-            padding: 5px 5px 8px 5px;
+            left: 10px;
+			height: 70px;
+            bottom: 110px;
+            padding: 5px 5px 5px 5px;
             background: #ecf0f1;
 			opacity: .95;
 			border: 2px solid #0B486B;
-			z-index: 5;
 			position: absolute;
             border-radius:5px;
             color: #047d50;
-            width: 180px;
+            width: 175px;
             opacity: .9;
             z-index: 7;
             color: #0B486B;
 
         }
-		#side-panel p {
-			margin: 8px 0 4px;
-			padding: 0 25px 0 15px;
-			color: #3d3d3d;
-			text-align: left;
-			font-size: 1em;
-		}
-		
-		#side-panel p:after {
-			content: '';
-			display: block;
-			clear: both;
-		}
-		
-		#side-panel img {
-			float: right;
-			margin: 0 0 15px 15px;
-		}
 		
 		.btn {
 			padding: 10px 80px;
@@ -198,17 +193,17 @@
 	</div>
 	<div id='about-button' class="container">
 		<h2>Language and Autism</h2>
-		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo"><span>The Map</span>
+		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo"><span>The Map</span></button>
 			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#info2"><span>The Data</span>
 		</button>
 		<div id = "info2"  class = "collapse">
             <p>About the Data: </p> 
             <p>This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD.</p>
-			</div>
+		</div>
 			
 		<div id="demo" class="collapse">
             <p>About this Map:</p> 
-            <p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family. </p>
+            <p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family. Map developed by: <a href= "http://annaleebard.github.io/">Anna Bard</a></p>
 		</div>  
 	</div>
 <div id="legend">
@@ -223,7 +218,7 @@
         </div>
 	<div id=sparks class= adultsparks>
         <span id="sparkline"></span>
-        <h3>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Park &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Child's Home &nbsp &nbsp &nbsp &nbsp Friend's Home &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp Grocery Store &nbsp &nbsp &nbsp &nbsp</h3>
+        <h4>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Park &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Child's Home &nbsp &nbsp &nbsp &nbsp Friend's Home &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp Grocery Store &nbsp &nbsp &nbsp &nbsp</h4>
 	</div>
 		
 	<div id='map'></div>
@@ -245,8 +240,6 @@
 		map.addLayer(tiles);
 
 		var dataLayer
-
-		
 
 		// use JQuery to load GeoJSON from an external file
 		$.getJSON("B_winter_park_clean.geojson", function (data) {
