@@ -3,96 +3,16 @@
 <html>
 
 <head>
-    <meta charset=utf-8 />
-    <title>Language and Autism Mapped</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: whitesmoke;
-            font-family: Lato, sans-serif;
-            color: #0D0000;
-        }
-        header {
-            padding: 6px 10%;
-        }
-        h1 {
-            text-align: center;
-            vertical-align: middle;
-            color: #001323;
-        }
-        h2 {
-			text-align: center;
-			vertical-align: middle;
-            color: #001323;
-        }
-        #map {
-            width: 80%;
-            height: 540px;
-            margin: 10px auto;
-        }
-        footer {
-            padding: 6px 10%;
-            width: 80%;
-        }
-        p {
-            font-size: 1em;
-            color: #001323;
-        }
-		a{
-			color: dimgrey;
-			text-decoration: none;
-		}
-		a:hover{
-			color:black
-		}
-        /* Additional style rules go here! */
-    </style>
-</head>
-
-<body>
-    
-        <h1>Future home of:</h1>
-		<h1>Language and Autism - Mapped</h1>
-        <h2><a href="mailto:annaleebard@gmail.com">Contact: Anna Lee Espinosa Bard</a></h2>
-  
-
-    
-
-    <script>
-       
-          
-    </script>
-    
-</body>
-
-=======
-<!DOCTYPE html>
-<html>
-
-<head>
 	<meta charset=utf-8 />
 	<title>Language and Autism</title>
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	<script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-
 	<script src='https://code.jquery.com/jquery-1.12.0.min.js'></script>
 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
-	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
 
 	<link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -142,16 +62,6 @@
 			z-index: 1;
 		}
 		
-		#side-panel {
-			position: absolute;
-			right: 0;
-			top: 0;
-			bottom: 0;
-			width: 30%;
-			background: whitesmoke;
-			border-right: 2px solid #0B486B;
-			overflow-y: scroll;
-		}
 		
 		h1 {
 			padding: 8px 25px 8px 15px;
@@ -187,7 +97,7 @@
 		
 		.container {
 			right: 50px;
-			width: 250px;
+			width: 255px;
 			top: 15px;
 			padding: 5px 5px 8px 5px;
 			background: #ecf0f1;
@@ -196,7 +106,6 @@
 			z-index: 5;
 			position: absolute;
 			border-radius: 5px;
-            overflow-y: scroll;
 		}
         
         .adultsparks{
@@ -214,17 +123,17 @@
             
         }
 		#legend span {
-        display: block;
-        border-radius: 50%;
-        float: right;
-        height: 20px;
-        width: 20px;
-        text-align: right;
-        color: #047d50;
-        margin-right: 10px;
-        border: 2px solid #0B486B;
+			display: block;
+			border-radius: 50%;
+			float: right;
+			height: 20px;
+			width: 20px;
+			text-align: right;
+			color: #047d50;
+			margin-right: 10px;
+			border: 2px solid #0B486B;
             color: #0B486B;
-    }
+		}
         #legend {
             border: 3px solid #047d50;
             position: absolute;
@@ -285,14 +194,8 @@
 
 <body>
 
-	<!--
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
--->
 	<script src="jquery.js"></script>
 	<script src="sparkline.js"></script>
-
-
 
 	</div>
 	<div id='about-button' class="container">
@@ -322,9 +225,9 @@
         </div>
 	<div id=sparks class= adultsparks>
         <span id="sparkline"></span>
-        <h3>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Park &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp     Child's Home   &nbsp &nbsp &nbsp &nbsp Friend's Home &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  Grocery Store &nbsp &nbsp &nbsp &nbsp   </h3>
+        <h3>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Park &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Child's Home &nbsp &nbsp &nbsp &nbsp Friend's Home &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp Grocery Store &nbsp &nbsp &nbsp &nbsp</h3>
 	</div>
-	</p>
+		
 	<div id='map'></div>
 	<h2>Map Developed by Anna Bard</h2>
 	<script>
@@ -437,6 +340,7 @@
 				});
 
 			} // end colorCircles()
+
 
 		function getColor(d) {
 			if (d == "1") {
