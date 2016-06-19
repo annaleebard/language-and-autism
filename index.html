@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -7,44 +6,35 @@
 	<title>Language and Autism</title>
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
-  	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
-  
-  	<link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
-  	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-	<script src='https://code.jquery.com/jquery-1.12.0.min.js'></script>  
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
-    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	<script src='https://code.jquery.com/jquery-1.12.0.min.js'></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 	<style>
-        .legend label,
-        .legend span {
-            display: block;
-            float: center;
-            height: 10px;
-            width: 20%;
-            text-align: center;
-            font-size: 9px;
-            color: #808080;
-        }
-        
-        .mycluster {
-			width: 70px;
-			height: 70px;
-			background-color:#3498db;
+		
+		.mycluster {
+			width: 40px;
+			height: 40px;
+			background-color: #3498db;
 			text-align: center;
 			font-size: 18px;
-            border-radius: 50%;
-            border-color: #0B486B;
-            color: whitesmoke;
-            weight:1;
-            line-height: 40px;
-            -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
-            -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
-            box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
-            
+			border-radius: 50%;
+			border: 2px #0B486B;
+			color: whitesmoke;
+			weight: 1;
+			line-height: 40px;
+			-webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+			-moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+			box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
 		}
+		
 		body {
 			margin: 0;
 			padding: 0;
@@ -62,7 +52,9 @@
 		
 		p {
 			padding: 0px 0px 0px 0px;
+			font-size: .8em
 		}
+		
 		h1 {
 			padding: 8px 25px 8px 15px;
 			margin: 0;
@@ -84,8 +76,9 @@
 			font-family: Montserrat;
 			font-weight: bold
 		}
-        h3{
-            margin: 0;
+		
+		h3 {
+			margin: 0;
 			padding: 5px 0px 0px 0px;
 			color: #0B486B;
 			font-weight: 500;
@@ -93,7 +86,8 @@
 			text-align: left;
 			font-family: Montserrat;
 			font-weight: bold
-        }
+		}
+		
 		h4 {
 			margin: 0;
 			padding: 0px 0px 0px 0px;
@@ -117,10 +111,10 @@
 			position: absolute;
 			border-radius: 5px;
 		}
-        
-        .adultsparks{
-            left: 50px;
-			width: 1180px;
+		
+		.adultsparks {
+			left: 50px;
+			width: 1050px;
 			height: 90px;
 			bottom: 15px;
 			padding: 2px 2px 2px 2px;
@@ -130,40 +124,66 @@
 			z-index: 5;
 			position: absolute;
 			border-radius: 5px;
-            overflow-x: scroll;
-            
-        }
-		#legend span {
+			/*            overflow-x: scroll;*/
+		}
+		
+		.square {
 			display: block;
 			border-radius: 50%;
 			float: right;
 			height: 20px;
 			width: 20px;
-			text-align: right;
-			color: #047d50;
+			text-align: center;
 			margin-right: 10px;
-			border: 2px solid #0B486B;
-            color: #0B486B;
+			color: #0B486B;
+			padding: 0px 0px 0px 0px;
 		}
-        #legend {
-            border: 3px solid #047d50;
-            position: absolute;
-            left: 10px;
-			height: 70px;
-            bottom: 110px;
-            padding: 5px 5px 5px 5px;
-            background: #ecf0f1;
+		
+		#legend {
+			position: absolute;
+			left: 10px;
+			height: 145px;
+			bottom: 120px;
+			padding: 4px 4px 4px 4px;
+			background: #ecf0f1;
 			opacity: .95;
 			border: 2px solid #0B486B;
 			position: absolute;
-            border-radius:5px;
-            color: #047d50;
-            width: 175px;
-            opacity: .9;
-            z-index: 7;
-            color: #0B486B;
-
-        }
+			border-radius: 5px;
+			width: 154px;
+			opacity: .9;
+			z-index: 7;
+			color: #0B486B;
+			text-align: center
+		}
+		.clusterIcon{
+			display: block;
+			border-radius: 50%;
+			float: right;
+			height: 40px;
+			width: 40px;
+			text-align: right;
+			color: #3498db;
+			margin-right: 10px;
+			border:  #0B486B;
+			-webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+			-moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+			box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+			padding:  0px 0px 0px 0px
+		}
+		
+		ref {
+			width: 40px;
+			height: 40px;
+			
+			text-align: center;
+			font-size: 18px;
+			color: whitesmoke;
+			weight: 1;
+			line-height: 40px;
+			
+		}
+			
 		
 		.btn {
 			padding: 10px 80px;
@@ -181,6 +201,27 @@
 			bottom: 10px;
 			z-index: 4
 		}
+		
+		.info h3 {
+			margin: 0;
+			font-size: 2em;
+		}
+		
+		.jqstooltip {
+			-webkit-box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			box-sizing: content-box;
+		}
+		
+		.custom .leaflet-popup-tip,
+		.custom .leaflet-popup-content-wrapper {
+			background: #0B486B;
+			color: #ffffff;
+			opacity: .9;
+			font-size: 1.2em;
+			font-weight: bold;
+
+		}
 	</style>
 </head>
 
@@ -191,60 +232,137 @@
 	<script src="sparkline.js"></script>
 
 	</div>
+
 	<div id='about-button' class="container">
 		<h2>Language and Autism</h2>
-		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo"><span>The Map</span></button>
-			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#info2"><span>The Data</span>
+		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo"> <span>The Map</span>
 		</button>
-		<div id = "info2"  class = "collapse">
-            <p>About the Data: </p> 
-            <p>This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD.</p>
+		<!--
+		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#info2"> <span>The Data</span>
+		</button>
+-->
+
+		<div id="info2" class="collapse">
+			<p>About the Data: </p>
+			<p>This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD.</p>
 		</div>
-			
+
 		<div id="demo" class="collapse">
-            <p>About this Map:</p> 
-            <p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family. Map developed by: <a href= "http://annaleebard.github.io/">Anna Bard</a></p>
-		</div>  
+			<p>About this Map:</p>
+			<p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family. This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD. Map authored by: <a href="http://annaleebard.github.io/">Anna Bard</a>
+			</p>
+		</div>
 	</div>
-<div id="legend">
-        
-        
-        <p class="one"><span class="square" style='background:#16A085;'></span>
-            <label> Adult Vocalization</label>
-        </p>
-        <p class="two"><span class="square" style='background:#EC644B;'></span>
-            <label> Child Vocalization</label>
-        </p>
-        </div>
-	<div id=sparks class= adultsparks>
-        <span id="sparkline"></span>
-        <h4>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Park &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Child's Home &nbsp &nbsp &nbsp &nbsp Friend's Home &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp Grocery Store &nbsp &nbsp &nbsp &nbsp</h4>
+
+
+	<div id="legend">
+
+		<p class="one"><span class="square" style='background:#16A085;'></span>
+			<label> Adult Vocalizations </br> per minute</label>
+		</p>
+		<p class="two"><span class="square" style='background:#EC644B;'></span>
+			<label> Child Vocalizations</br> per minute</label>
+		</p>
+		<p class="three"><span class="clusterIcon" style='background:#3498db;'></span>
+			<label> Total</br> Vocalizations</p></label>
+		</p>
 	</div>
-		
+
+
+	<div id=sparks class=adultsparks>
+		<span id="sparkline"></span>
+		<h4> Adult Vocalizations per Minute</h4>
+		<!--	<h4>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Park &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 			&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Child's Home &nbsp &nbsp &nbsp &nbsp 				Friend's Home &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 				&nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp Grocery Store &nbsp &nbsp &nbsp &nbsp</h4>-->
+	</div>
+
+
 	<div id='map'></div>
-	<h2>Map Developed by Anna Bard</h2>
+
 	<script>
 		var map = L.map('map', {
 			center: [28.71, -81.30],
 			zoom: 12,
 			maxZoom: 25
 		})
+
 		var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
 			attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			subdomains: 'abcd',
 			minZoom: 0,
-			maxZoom: 25,
+			maxZoom: 15,
 			ext: 'png'
 		});
 		tiles.addTo(map);
 		map.addLayer(tiles);
 
 		var dataLayer
+		$.getJSON("B_winter_interval.geojson", function (data) {
+			drawMap(data);
 
-		// use JQuery to load GeoJSON from an external file
+		});
+		
+
+		function drawMap(lenaData) {
+
+			//create circle markers with style for adult vocalizations 
+			var adult = L.geoJson(lenaData, {
+				pointToLayer: function (feature, latlng) {
+					return L.circleMarker(latlng, {
+						color: '#16A085',
+						fillcolor: '#16A085',
+						opacity: 1,
+						weight: 2.5,
+						fillOpacity: .5,
+					});
+				}
+
+			}).addTo(map);
+			console.log(lenaData);
+
+			//create circle markers with style for child vocalizations
+			var child = L.geoJson(lenaData, {
+				pointToLayer: function (feature, latlng) {
+					return L.circleMarker(latlng, {
+						color: '#EC644B',
+						fillColor: '#EC644B',
+						opacity: 1,
+						weight: 2.5,
+						fillOpacity: .5,
+
+					});
+				}
+			}).addTo(map);
+			updateSymbols(adult, child, 1);
+		};
+
+		function updateSymbols(adult, child) {
+
+			var allRadii = [];
+			var radius;
+			adult.eachLayer(function (layer) {
+				radius = calcRadius(layer.feature.properties.adult);
+				layer.setRadius(radius)
+				allRadii.push(radius)
+
+			});
+
+			child.eachLayer(function (layer) {
+				radius = calcRadius(layer.feature.properties.child);
+				layer.setRadius(radius)
+				allRadii.push(radius)
+			});
+		}
+
+		function calcRadius(val) {
+				var radius = Math.sqrt(val / Math.PI);
+				return radius * 5;
+			}
+			// use JQuery to load GeoJSON from an external file
 		$.getJSON("B_winter_park_clean.geojson", function (data) {
 			// add GeoJSON layer to the map once the file is loaded
 			//			console.log(data);
+
+
 
 			dataLayer = L.geoJson(data, {
 				pointToLayer: function (feature, latlng) {
@@ -252,45 +370,56 @@
 						color: '#16A085',
 						radius: 3,
 						fillColor: "#0B486B",
-						opacity: .8,
-                        fillOpacity:.8,
+						fillOpacity: .8,
 						minZoom: 5,
-						weight:  .1
+						stroke: 0
+
 					})
 				}
-			}).addTo(map);
+			})
 
 
 			//create clusters
 
 			var clusters = L.markerClusterGroup({
-			     maxClusterRadius: 120,
-			     iconCreateFunction: function (cluster) {
-				var markers = cluster.getAllChildMarkers();
-				var n = 0;
-				for (var i = 0; i < markers.length; i++) {
-					n = markers.length;
-				}
-				return L.divIcon({
-					html: n, 
-					className: 'mycluster', 
-					iconSize: L.point(40, 40) });
-			},
-				
-			//Disable all of the defaults:
-				spiderfyOnMaxZoom: false, 
-				showCoverageOnHover: true, 
+				maxClusterRadius: 120,
+				//create custom icon
+				iconCreateFunction: function (cluster) {
+
+					var markers = cluster.getAllChildMarkers();
+					var n = 0;
+					for (var i = 0; i < markers.length; i++) {
+						n = markers.length;
+					}
+					return L.divIcon({
+						html: n,
+						className: 'mycluster',
+						iconSize: (40)
+
+					});
+				},
+
+				//Disable all of the defaults:
+				spiderfyOnMaxZoom: false,
+				showCoverageOnHover: true,
 				zoomToBoundsOnClick: true,
 				polygonOptions: {
-					color: '#EC644B', 
-					stroke: 1, 
-					fillOpacity:.7
+					color: '#EC644B',
+					stroke: 1,
+					fillOpacity: .7,
 				}
+			});
+			clusters.addLayer(dataLayer);
+			map.addLayer(clusters);
+			colorCircles();
+			buildPopup(clusters);
 		});
 
+		function buildPopup(clusters, dataLayer) {
 			clusters.on('clustermouseover', function (a) {
 				var markers = a.layer.getAllChildMarkers();
-				
+
+
 				// variables to hold our count
 				var adult = 0,
 					child = 0,
@@ -304,9 +433,9 @@
 					child += markers[i].feature.properties['child'];
 					peer += markers[i].feature.properties['peer'];
 					convoTurn += markers[i].feature.properties['convoTurn'];
-					ratio = child/adult
+					ratio = child / adult
 				}
-				
+
 				//				var props = a.layer.feature.properties;
 				//				for (var i = 1; i <= markers.length; i++) {
 				//					adultValues.push(adult);
@@ -318,20 +447,21 @@
 					'Adult: ' + adult + '<br>' +
 					'Child: ' + child + '<br>' +
 					'Peer:  ' + peer + '<br>' +
-					'Conversation Turn:  ' + convoTurn +'<br>' +
+					'Conversation Turn:  ' + convoTurn + '<br>' +
 					'Child to Adult Vocalization Ratio: ' + ratio.toLocaleString();
+
+
+
 				// add popup and open
-				//console.log(a.layer)
-				map.openPopup(html, a.layer.getLatLng());
-				
+				var popup = L.popup({
+						'className': 'custom'
+					})
+					.setLatLng(a.layer.getLatLng())
+					.setContent(html)
+					.openOn(map)
+
 			});
-
-			clusters.addLayer(dataLayer);
-			map.addLayer(clusters);
-			colorCircles();
-
-		});
-		
+		}
 
 		function colorCircles() {
 				//loop through each "layer" (circle) to access attribute info
@@ -342,34 +472,36 @@
 						fillColor: getColor(layer.feature.properties["child"])
 					})
 					getColor();
+					
+		console.log(dataLayer)
 				});
 
 			} // end colorCircles()
 
 
 		function getColor(d) {
-			if (d == "1") {
-				return '#EC644B';
-			}
+				if (d == "1") {
+					return '#EC644B';
+				}
 
-		}       
-		// Values to render
-		var adultValues = [21, 19, 15, 15, 10, 18, 16, 25, 19, 48, 53, 22, 30, 27, 28, 47, 18, 5, 7, 17, 2, 24, 27, 28, 2, 14, 23, 4, 5, 4, 6, 3, 10, 16, 0, 4, 2, 4, 16, 29, 34, 30, 36, 33, 24, 20, 2, 6, 5, 7, 8, 6, 5, 1, 14, 6, 9, 9, 4, 13, 8, 2, 0, 4, 8, 10, 3, 12, 14, 4, 1, 0, 0, 0, 1, 0, 1, 0, 8, 2, 4, 14, 8, 5, 7, 0, 4, 4, 1, 7, 9, 3, 7, 16, 8, 29, 3, 3, 1, 4, 7, 11, 0, 4, 0, 0, 2, 0, 7, 10, 0, 0, 1, 3, 4, 20, 1, 2, 2, 4, 0, 2, 2, 10, 20, 11, 5, 0, 0, 2, 0, 3, 17, 5, 7, 11, 5, 12, 10, 9, 16, 19, 36, 6, 21, 23, 16, 16, 30, 10, 17, 8, 10, 5, 5, 14, 15, 12, 9, 22, 19, 9, 29, 32, 37, 8, 35, 32, 16, 21, 17, 37, 51, 33, 20, 17, 24, 27, 46, 46, 39, 34, 10, 0, 5, 3, 2, 2, 8, 9, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 4, 4, 10, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0
+			}
+		
+			// Values to render
+		var adultValues = [21, 19, 15, 15, 10, 18, 16, 25, 19, 48, 53, 22, 30, 27, 28, 47, 18, 5, 7, 17, 2, 24, 27, 28, 2, 14, 23, 4, 5, 4, 6, 3, 10, 16, 0, 4, 2, 4, 16, 29, 34, 30, 36, 33, 24, 20, 2, 6, 5, 7, 8, 6, 5, 1, 14, 6, 9, 9, 4, 13, 8, 2, 0, 4, 8, 10, 3, 12, 14, 4, 1, 0, 0, 0, 1, 0, 1, 0, 8, 2, 4, 14, 8, 5, 7, 0, 4, 4, 1, 7, 9, 3, 7, 16, 8, 29, 3, 3, 1, 4, 7, 11, 0, 4, 0, 0, 2, 0, 7, 10, 0, 0, 1, 3, 4, 20, 1, 2, 2, 4, 0, 2, 2, 10, 20, 11, 5, 0, 0, 2, 0, 3, 17, 5, 7, 11, 5, 12, 10, 9, 16, 19, 36, 6, 21, 23, 16, 16, 30, 10, 17, 8, 10, 5, 5, 14, 15, 12, 9, 22, 19, 9, 29, 32, 37, 8, 35, 32, 16, 21, 17, 37, 51, 33, 20, 17, 24, 27, 46, 46, 39, 34, 10, 0, 5, 3, 2, 2, 8, 9, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 4, 4, 10, 1, 1, 1
 ];
-		
-						// Draw a sparkline for the #sparkline element
-						$('#sparkline').sparkline(adultValues, {
-							type: "bar",
-							width: '500px',
-							height: '50px',
-							minSpotColor: '#e74c3c',
-							maxSpotColor: '#e74c3c',
-							fillColor: "#e74c3c",
-                            
-						});
-		
+
+		// Draw a sparkline for the #sparkline element
+		$('#sparkline').sparkline(adultValues, {
+			type: "bar",
+			width: '500px',
+			height: '50px',
+			minSpotColor: '#e74c3c',
+			maxSpotColor: '#e74c3c',
+			fillColor: "#e74c3c",
+
+
+		});
 	</script>
 </body>
 
 </html>
- 
