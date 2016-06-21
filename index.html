@@ -8,7 +8,7 @@
 	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
 	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
 
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
 
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 	<script src='https://code.jquery.com/jquery-1.12.0.min.js'></script>
@@ -16,9 +16,10 @@
 	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<style>
-		
 		.mycluster {
 			width: 40px;
 			height: 40px;
@@ -32,7 +33,7 @@
 			line-height: 40px;
 			-webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
 			-moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
-			box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
+			box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1); 
 		}
 		
 		body {
@@ -98,6 +99,7 @@
 			font-family: Montserrat;
 			font-weight: bold
 		}
+		
 		h5 {
 			margin: 0;
 			padding: 0px 0px 0px 0px;
@@ -107,6 +109,7 @@
 			font-family: Montserrat;
 			font-weight: bold
 		}
+		
 		h6 {
 			margin: 0;
 			padding: 0px 0px 0px 0px;
@@ -118,7 +121,7 @@
 		}
 		
 		.container {
-			right: 50px;
+			left: 25px;
 			width: 255px;
 			top: 15px;
 			padding: 5px 5px 8px 5px;
@@ -131,10 +134,8 @@
 		}
 		
 		.adultsparks {
-			left: 50px;
 			width: 1050px;
-			height: 90px;
-			bottom: 15px;
+			height: 78px;
 			padding: 2px 2px 2px 2px;
 			background: #ecf0f1;
 			opacity: .95;
@@ -159,14 +160,13 @@
 		
 		#legend {
 			position: absolute;
-			left: 10px;
+			right: 25px;
 			height: 145px;
-			bottom: 120px;
+			top: 15px;
 			padding: 4px 4px 4px 4px;
 			background: #ecf0f1;
 			opacity: .95;
 			border: 2px solid #0B486B;
-			position: absolute;
 			border-radius: 5px;
 			width: 154px;
 			opacity: .9;
@@ -174,7 +174,8 @@
 			color: #0B486B;
 			text-align: center
 		}
-		.clusterIcon{
+		
+		.clusterIcon {
 			display: block;
 			border-radius: 50%;
 			float: right;
@@ -183,25 +184,22 @@
 			text-align: right;
 			color: #3498db;
 			margin-right: 10px;
-			border:  #0B486B;
+			border: #0B486B;
 			-webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
 			-moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
 			box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
-			padding:  0px 0px 0px 0px
+			padding: 0px 0px 0px 0px
 		}
 		
 		ref {
 			width: 40px;
 			height: 40px;
-			
 			text-align: center;
 			font-size: 18px;
 			color: whitesmoke;
 			weight: 1;
 			line-height: 40px;
-			
 		}
-			
 		
 		.btn {
 			padding: 10px 80px;
@@ -215,9 +213,11 @@
 		
 		#sparks {
 			position: fixed;
-			left: 10px;
-			bottom: 10px;
-			z-index: 4
+			left: 0px;
+			right: 0px;
+			bottom: 35px;
+			z-index: 4;
+			margin: auto
 		}
 		
 		.info h3 {
@@ -238,7 +238,23 @@
 			opacity: .9;
 			font-size: 1.2em;
 			font-weight: bold;
-
+		}
+		
+		#leaflet-slider{
+			color: snow;
+			width: 500px;
+			height: 20px;
+			font-size:2em;
+			position: absolute;
+			left: 0px;
+			right:0px;
+			botom: 20px;
+			margin: auto;
+			top: 100px;
+			background: #0B486B
+		}
+		#slider-timestamp{
+			background:#3498db
 		}
 	</style>
 </head>
@@ -246,8 +262,8 @@
 
 <body>
 
-	<script src="jquery.js"></script>
 	<script src="sparkline.js"></script>
+	<script src="SliderControl.js"></script>
 
 	</div>
 
@@ -282,17 +298,18 @@
 			<label> Child Vocalizations</br> per minute</label>
 		</p>
 		<p class="three"><span class="clusterIcon" style='background:#3498db;'></span>
-			<label> Total</br> Vocalizations</p></label>
+			<label> Total</br> Vocalizations</p>
+		</label>
 		</p>
 	</div>
 
 
 	<div id=sparks class=adultsparks>
 		<span id="sparkline"></span>
-		<h5 style= "float: left">11:30 AM</h5><h6 style= "float: right">3:30 PM</h6><h4> Adult Vocalizations per Minute</h4>
-		
-		
-		<!--	<h4>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Park &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 			&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Child's Home &nbsp &nbsp &nbsp &nbsp 				Friend's Home &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 				&nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp Grocery Store & nbsp  &nbsp &nbsp &nbsp</h4>-->
+		<h5 style="float: left">11:30 AM</h5>
+		<h6 style="float: right">3:30 PM</h6>
+		<h4> Adult Vocalizations per Minute</h4>
+
 	</div>
 
 
@@ -301,26 +318,48 @@
 	<script>
 		var map = L.map('map', {
 			center: [28.71, -81.30],
-			zoom: 12,
-			maxZoom: 25
+			zoom: 13,
+			maxZoom: 25,
+			zoomControl: false
 		})
 
 		var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
 			attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 			subdomains: 'abcd',
 			minZoom: 0,
-			maxZoom: 15,
+			maxZoom: 25,
 			ext: 'png'
 		});
 		tiles.addTo(map);
 		map.addLayer(tiles);
 
-		var dataLayer
-		$.getJSON("B_winter_interval.geojson", function (data) {
-			drawMap(data);
+		var sliderControl = null;
 
-		});
+		var dataLayer
 		
+		$.getJSON("B_winter_interval.geojson", function (json) {
+			drawMap(json);
+			
+			var testlayer = L.geoJson(json),
+				sliderControl = L.control.sliderControl({
+					position: "topleft",
+					layer: testlayer,
+					
+				});
+			
+			sliderControl = L.control.sliderControl({
+				position: "topleft",
+				layer: testlayer,
+				timeAttribute: "time",
+				range: true
+			});
+			
+			//Make sure to add the slider to the map ;-)
+			map.addControl(sliderControl);
+			//And initialize the slider
+			sliderControl.startSlider();
+		});
+
 
 		function drawMap(lenaData) {
 
@@ -331,13 +370,12 @@
 						color: '#16A085',
 						fillcolor: '#16A085',
 						opacity: 1,
-						weight: 2.5,
+						weight:1.5,
 						fillOpacity: .5,
 					});
 				}
 
 			}).addTo(map);
-			console.log(lenaData);
 
 			//create circle markers with style for child vocalizations
 			var child = L.geoJson(lenaData, {
@@ -346,9 +384,8 @@
 						color: '#EC644B',
 						fillColor: '#EC644B',
 						opacity: 1,
-						weight: 2.5,
+						weight: 1.5,
 						fillOpacity: .5,
-
 					});
 				}
 			}).addTo(map);
@@ -375,7 +412,7 @@
 
 		function calcRadius(val) {
 				var radius = Math.sqrt(val / Math.PI);
-				return radius * 5;
+				return radius * 8;
 			}
 			// use JQuery to load GeoJSON from an external file
 		$.getJSON("B_winter_park_clean.geojson", function (data) {
@@ -492,21 +529,20 @@
 						fillColor: getColor(layer.feature.properties["child"])
 					})
 					getColor();
-					
-		console.log(dataLayer)
+
 				});
 
 			} // end colorCircles()
 
 
 		function getColor(d) {
-				if (d == "1") {
-					return '#EC644B';
-				}
-
+			if (d == "1") {
+				return '#EC644B';
 			}
-		
-			// Values to render
+
+		}
+
+		// Values to render
 		var adultValues = [21, 19, 15, 15, 10, 18, 16, 25, 19, 48, 53, 22, 30, 27, 28, 47, 18, 5, 7, 17, 2, 24, 27, 28, 2, 14, 23, 4, 5, 4, 6, 3, 10, 16, 0, 4, 2, 4, 16, 29, 34, 30, 36, 33, 24, 20, 2, 6, 5, 7, 8, 6, 5, 1, 14, 6, 9, 9, 4, 13, 8, 2, 0, 4, 8, 10, 3, 12, 14, 4, 1, 0, 0, 0, 1, 0, 1, 0, 8, 2, 4, 14, 8, 5, 7, 0, 4, 4, 1, 7, 9, 3, 7, 16, 8, 29, 3, 3, 1, 4, 7, 11, 0, 4, 0, 0, 2, 0, 7, 10, 0, 0, 1, 3, 4, 20, 1, 2, 2, 4, 0, 2, 2, 10, 20, 11, 5, 0, 0, 2, 0, 3, 17, 5, 7, 11, 5, 12, 10, 9, 16, 19, 36, 6, 21, 23, 16, 16, 30, 10, 17, 8, 10, 5, 5, 14, 15, 12, 9, 22, 19, 9, 29, 32, 37, 8, 35, 32, 16, 21, 17, 37, 51, 33, 20, 17, 24, 27, 46, 46, 39, 34, 10, 0, 5, 3, 2, 2, 8, 9, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 4, 4, 10, 1, 1, 1
 ];
 
