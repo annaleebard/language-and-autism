@@ -333,13 +333,91 @@
 		var sliderControl = null;
 
 		var dataLayer
-
+//		
+//		
+//		
+//		var commonStyles = {
+//			weight: 1,
+//			stroke: 1,
+//			fillOpacity: .8
+//		}
+//
+//		var layerInfo = {
+//			adultLayer: {
+//				source: "adult",
+//				color: '#1f78b4'
+//			},
+//			peerLayer: {
+//				source: "peer",
+//				color: '#a6cee3'
+//			},
+//			childLayer: {
+//				source: "child",
+//				color: '#fff89e'
+//			}
+//		};
+//
+//		var radiusCircle = L.circle([0, 0], 500000, {
+//			fillColor: false,
+//			fillOpacity: .2,
+//			stroke: false,
+//			weight: 2,
+//		}).addTo(map);
+//
+//		var geoJsonLayers = {};
+//
+//		for (var layer in layerInfo) {
+//			geoJsonLayers[layer] = L.geoJson(vocalInterval, {
+//				pointToLayer: function (feature, latlng) {
+//					return L.circleMarker(latlng, commonStyles);
+//				},
+//				filter: function (feature) {
+//					if (feature.properties[layerInfo[layer].source]) {
+//						return feature;
+//					}
+//				},
+//				style: function (feature) {
+//					return {
+//						color: layerInfo[layer].color,
+//						fillColor: layerInfo[layer].color,
+//						radius: getRadius(feature.properties[layerInfo[layer].source])
+//					}
+//				}
+//				
+//			}).addTo(map);
+//			//add slider control for adult layer
+//			sliderControl = L.control.sliderControl({
+//				position: "topleft",
+//				layer: layer,
+//			});
+//
+//			sliderControl = L.control.sliderControl({
+//				position: "bottomleft",
+//				layer: layer,
+//				timeAttribute: "time",
+//				range: true
+//			});
+//			//Make sure to add the slider to the map ;-)
+//			map.addControl(sliderControl);
+//			//And initialize the slider
+//			sliderControl.startSlider();
+//		}
+//
+//		
+//		
+//		function getRadius(val) {
+//			var radius = Math.sqrt(val / Math.PI);
+//			return radius * 20;
+//		}
 		
-
+		
+//
 		$.getJSON("B_winter_interval.geojson", function (json) {
 			drawMap(json);
 		});
 
+		
+		
 		function drawMap(circleData) {
 
 			//create circle markers with style for adult vocalizations 
