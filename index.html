@@ -264,11 +264,6 @@
 	<script src="SliderControl.js"></script>
 	<script src="B_winter_interval.js"></script>
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/gh-pages
 	<div id='about-button' class="container">
 		<h2>Language and Autism</h2>
 		<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo"> <span>The Map</span>
@@ -343,48 +338,6 @@
 
 		$.getJSON("B_winter_interval.geojson", function (json) {
 			drawMap(json);
-<<<<<<< HEAD
-=======
-			
-			var testlayer = L.geoJson(json),
-				sliderControl = L.control.sliderControl({
-					position: "topleft",
-					layer: testlayer,
-					
-				});
-			
-			sliderControl = L.control.sliderControl({
-				position: "bottomleft",
-				layer: testlayer,
-				timeAttribute: "time",
-				range: true
-			});
-			
-			//Make sure to add the slider to the map ;-)
-			map.addControl(sliderControl);
-			//And initialize the slider
-			sliderControl.startSlider();
-		});
->>>>>>> origin/gh-pages
-
-			//			var testlayer = L.geoJson(json),
-			//				sliderControl = L.control.sliderControl({
-			//					position: "topleft",
-			//					layer: testlayer,
-			//					
-			//				});
-			//			
-			//			sliderControl = L.control.sliderControl({
-			//				position: "topleft",
-			//				layer: testlayer,
-			//				timeAttribute: "time",
-			//				range: true
-			//			});
-			//			
-			//			//Make sure to add the slider to the map ;-)
-			//			map.addControl(sliderControl);
-			//			//And initialize the slider
-			//			sliderControl.startSlider();
 		});
 
 		function drawMap(circleData) {
