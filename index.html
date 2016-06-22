@@ -157,7 +157,7 @@
 			color: #0B486B;
 			padding: 0px 0px 0px 0px;
 		}
-		
+		/*
 		#legend {
 			position: absolute;
 			right: 25px;
@@ -174,6 +174,7 @@
 			color: #0B486B;
 			text-align: center
 		}
+*/
 		
 		.clusterIcon {
 			display: block;
@@ -254,6 +255,20 @@
 		#slider-timestamp {
 			background: #3498db
 		}
+		
+		.info {
+			padding: 6px 8px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			background: white;
+			background: rgba (255, 255, 255, 0.8);
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+			border-radius: 5px;
+		}
+		
+		.info h4 {
+			margin: 0 0 5px;
+			color: #777;
+		}
 	</style>
 </head>
 
@@ -333,91 +348,91 @@
 		var sliderControl = null;
 
 		var dataLayer
-//		
-//		
-//		
-//		var commonStyles = {
-//			weight: 1,
-//			stroke: 1,
-//			fillOpacity: .8
-//		}
-//
-//		var layerInfo = {
-//			adultLayer: {
-//				source: "adult",
-//				color: '#1f78b4'
-//			},
-//			peerLayer: {
-//				source: "peer",
-//				color: '#a6cee3'
-//			},
-//			childLayer: {
-//				source: "child",
-//				color: '#fff89e'
-//			}
-//		};
-//
-//		var radiusCircle = L.circle([0, 0], 500000, {
-//			fillColor: false,
-//			fillOpacity: .2,
-//			stroke: false,
-//			weight: 2,
-//		}).addTo(map);
-//
-//		var geoJsonLayers = {};
-//
-//		for (var layer in layerInfo) {
-//			geoJsonLayers[layer] = L.geoJson(vocalInterval, {
-//				pointToLayer: function (feature, latlng) {
-//					return L.circleMarker(latlng, commonStyles);
-//				},
-//				filter: function (feature) {
-//					if (feature.properties[layerInfo[layer].source]) {
-//						return feature;
-//					}
-//				},
-//				style: function (feature) {
-//					return {
-//						color: layerInfo[layer].color,
-//						fillColor: layerInfo[layer].color,
-//						radius: getRadius(feature.properties[layerInfo[layer].source])
-//					}
-//				}
-//				
-//			}).addTo(map);
-//			//add slider control for adult layer
-//			sliderControl = L.control.sliderControl({
-//				position: "topleft",
-//				layer: layer,
-//			});
-//
-//			sliderControl = L.control.sliderControl({
-//				position: "bottomleft",
-//				layer: layer,
-//				timeAttribute: "time",
-//				range: true
-//			});
-//			//Make sure to add the slider to the map ;-)
-//			map.addControl(sliderControl);
-//			//And initialize the slider
-//			sliderControl.startSlider();
-//		}
-//
-//		
-//		
-//		function getRadius(val) {
-//			var radius = Math.sqrt(val / Math.PI);
-//			return radius * 20;
-//		}
-		
-		
-//
+			//		
+			//		
+			//		
+			//		var commonStyles = {
+			//			weight: 1,
+			//			stroke: 1,
+			//			fillOpacity: .8
+			//		}
+			//
+			//		var layerInfo = {
+			//			adultLayer: {
+			//				source: "adult",
+			//				color: '#1f78b4'
+			//			},
+			//			peerLayer: {
+			//				source: "peer",
+			//				color: '#a6cee3'
+			//			},
+			//			childLayer: {
+			//				source: "child",
+			//				color: '#fff89e'
+			//			}
+			//		};
+			//
+			//		var radiusCircle = L.circle([0, 0], 500000, {
+			//			fillColor: false,
+			//			fillOpacity: .2,
+			//			stroke: false,
+			//			weight: 2,
+			//		}).addTo(map);
+			//
+			//		var geoJsonLayers = {};
+			//
+			//		for (var layer in layerInfo) {
+			//			geoJsonLayers[layer] = L.geoJson(vocalInterval, {
+			//				pointToLayer: function (feature, latlng) {
+			//					return L.circleMarker(latlng, commonStyles);
+			//				},
+			//				filter: function (feature) {
+			//					if (feature.properties[layerInfo[layer].source]) {
+			//						return feature;
+			//					}
+			//				},
+			//				style: function (feature) {
+			//					return {
+			//						color: layerInfo[layer].color,
+			//						fillColor: layerInfo[layer].color,
+			//						radius: getRadius(feature.properties[layerInfo[layer].source])
+			//					}
+			//				}
+			//				
+			//			}).addTo(map);
+			//			//add slider control for adult layer
+			//			sliderControl = L.control.sliderControl({
+			//				position: "topleft",
+			//				layer: layer,
+			//			});
+			//
+			//			sliderControl = L.control.sliderControl({
+			//				position: "bottomleft",
+			//				layer: layer,
+			//				timeAttribute: "time",
+			//				range: true
+			//			});
+			//			//Make sure to add the slider to the map ;-)
+			//			map.addControl(sliderControl);
+			//			//And initialize the slider
+			//			sliderControl.startSlider();
+			//		}
+			//
+			//		
+			//		
+			//		function getRadius(val) {
+			//			var radius = Math.sqrt(val / Math.PI);
+			//			return radius * 20;
+			//		}
+
+
+		//
 		$.getJSON("B_winter_interval.geojson", function (json) {
 			drawMap(json);
 		});
 
-		
-		
+
+
 		function drawMap(circleData) {
 
 			//create circle markers with style for adult vocalizations 
@@ -442,7 +457,7 @@
 						fillColor: '#EC644B',
 						opacity: 1,
 						weight: 1.5,
-						fillOpacity: .5, 
+						fillOpacity: .5,
 					});
 				}
 			}).addTo(map);
@@ -545,14 +560,12 @@
 			});
 			clusters.addLayer(dataLayer);
 			map.addLayer(clusters);
-			colorCircles();
 			buildPopup(clusters);
 		});
 
 		function buildPopup(clusters, dataLayer) {
 			clusters.on('clustermouseover', function (a) {
 				var markers = a.layer.getAllChildMarkers();
-
 
 				// variables to hold our count
 				var adult = 0,
@@ -570,53 +583,31 @@
 					ratio = child / adult
 				}
 
-				//				var props = a.layer.feature.properties;
-				//				for (var i = 1; i <= markers.length; i++) {
-				//					adultValues.push(adult);
-				//					childValues.push(child);
-				//				}
-
-				// build popup
-				var html = 'Total Vocalizations:' + '<br>' +
+				// build html for info panel
+				var html =
 					'Adult: ' + adult + '<br>' +
 					'Child: ' + child + '<br>' +
 					'Peer:  ' + peer + '<br>' +
-					'Conversation Turn:  ' + convoTurn + '<br>' +
+					'Conversation Turns:  ' + convoTurn + '<br>' +
 					'Child to Adult Vocalization Ratio: ' + ratio.toLocaleString();
 
-
-
-				// add popup and open
-				var popup = L.popup({
-						'className': 'custom'
-					})
-					.setLatLng(a.layer.getLatLng())
-					.setContent(html)
-					.openOn(map)
+				var info = L.control();
+				
+				info.onAdd = function (map) {
+					this._div = L.DomUtil.create('div', 'info');
+					this.update();
+					return this._div;
+				};
+				info.update = function (props) {
+					this._div.innerHTML = '<h4>Language Data: </h4>' + html
+				};
+				info.addTo(map);
+				});
+		
+				clusters.on('clustermouseout', function () {
+					$(".info").hide();
 
 			});
-		}
-
-		function colorCircles() {
-				//loop through each "layer" (circle) to access attribute info
-				dataLayer.eachLayer(function (layer) {
-					//console.log(layer.feature.properties);
-
-					layer.setStyle({
-						fillColor: getColor(layer.feature.properties["child"])
-					})
-					getColor();
-
-				});
-
-			} // end colorCircles()
-
-
-		function getColor(d) {
-			if (d == "1") {
-				return '#EC644B';
-			}
-
 		}
 
 		// Values to render
