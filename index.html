@@ -246,11 +246,8 @@
 			height: 20px;
 			font-size:2em;
 			position: absolute;
-			left: 0px;
-			right:0px;
-			botom: 20px;
-			margin: auto;
-			top: 100px;
+			left: 425px;
+			bottom: -6px;
 			background: #0B486B
 		}
 		#slider-timestamp{
@@ -264,8 +261,6 @@
 
 	<script src="sparkline.js"></script>
 	<script src="SliderControl.js"></script>
-
-	</div>
 
 	<div id='about-button' class="container">
 		<h2>Language and Autism</h2>
@@ -348,7 +343,7 @@
 				});
 			
 			sliderControl = L.control.sliderControl({
-				position: "topleft",
+				position: "bottomleft",
 				layer: testlayer,
 				timeAttribute: "time",
 				range: true
