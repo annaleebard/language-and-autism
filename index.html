@@ -16,7 +16,7 @@
 	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	
+
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<style>
@@ -33,7 +33,7 @@
 			line-height: 40px;
 			-webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
 			-moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
-			box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1); 
+			box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 1);
 		}
 		
 		body {
@@ -240,21 +240,19 @@
 			font-weight: bold;
 		}
 		
-		#leaflet-slider{
+		#leaflet-slider {
 			color: snow;
 			width: 500px;
 			height: 20px;
-			font-size:2em;
+			font-size: 2em;
 			position: absolute;
-			left: 0px;
-			right:0px;
-			botom: 20px;
-			margin: auto;
-			top: 100px;
+			left: 425px;
+			bottom: -6px;
 			background: #0B486B
 		}
-		#slider-timestamp{
-			background:#3498db
+		
+		#slider-timestamp {
+			background: #3498db
 		}
 	</style>
 </head>
@@ -264,8 +262,9 @@
 
 	<script src="sparkline.js"></script>
 	<script src="SliderControl.js"></script>
+	<script src="B_winter_interval.js"></script>
 
-	</div>
+
 
 	<div id='about-button' class="container">
 		<h2>Language and Autism</h2>
@@ -336,41 +335,42 @@
 		var sliderControl = null;
 
 		var dataLayer
+
 		
+
 		$.getJSON("B_winter_interval.geojson", function (json) {
 			drawMap(json);
-			
-			var testlayer = L.geoJson(json),
-				sliderControl = L.control.sliderControl({
-					position: "topleft",
-					layer: testlayer,
-					
-				});
-			
-			sliderControl = L.control.sliderControl({
-				position: "topleft",
-				layer: testlayer,
-				timeAttribute: "time",
-				range: true
-			});
-			
-			//Make sure to add the slider to the map ;-)
-			map.addControl(sliderControl);
-			//And initialize the slider
-			sliderControl.startSlider();
+
+			//			var testlayer = L.geoJson(json),
+			//				sliderControl = L.control.sliderControl({
+			//					position: "topleft",
+			//					layer: testlayer,
+			//					
+			//				});
+			//			
+			//			sliderControl = L.control.sliderControl({
+			//				position: "topleft",
+			//				layer: testlayer,
+			//				timeAttribute: "time",
+			//				range: true
+			//			});
+			//			
+			//			//Make sure to add the slider to the map ;-)
+			//			map.addControl(sliderControl);
+			//			//And initialize the slider
+			//			sliderControl.startSlider();
 		});
 
-
-		function drawMap(lenaData) {
+		function drawMap(circleData) {
 
 			//create circle markers with style for adult vocalizations 
-			var adult = L.geoJson(lenaData, {
+			var adult = L.geoJson(circleData, {
 				pointToLayer: function (feature, latlng) {
 					return L.circleMarker(latlng, {
 						color: '#16A085',
 						fillcolor: '#16A085',
 						opacity: 1,
-						weight:1.5,
+						weight: 1.5,
 						fillOpacity: .5,
 					});
 				}
@@ -378,7 +378,7 @@
 			}).addTo(map);
 
 			//create circle markers with style for child vocalizations
-			var child = L.geoJson(lenaData, {
+			var child = L.geoJson(circleData, {
 				pointToLayer: function (feature, latlng) {
 					return L.circleMarker(latlng, {
 						color: '#EC644B',
@@ -390,6 +390,26 @@
 				}
 			}).addTo(map);
 			updateSymbols(adult, child, 1);
+
+			//add slider control for adult layer
+			sliderControl = L.control.sliderControl({
+				position: "topleft",
+				layer: adult,
+			});
+
+			sliderControl = L.control.sliderControl({
+				position: "bottomleft",
+				layer: adult,
+				timeAttribute: "time",
+				range: true
+			});
+			//Make sure to add the slider to the map ;-)
+			map.addControl(sliderControl);
+			//And initialize the slider
+			sliderControl.startSlider();
+
+			//add slider control for child layer
+
 		};
 
 		function updateSymbols(adult, child) {
