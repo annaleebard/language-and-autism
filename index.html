@@ -13,12 +13,16 @@
 	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 	<script src='https://code.jquery.com/jquery-1.12.0.min.js'></script>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+	<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	<script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
 	<style>
 		.mycluster {
 			width: 40px;
@@ -121,7 +125,7 @@
 		}
 		
 		.container {
-			left: 25px;
+			left: 20px;
 			width: 255px;
 			top: 15px;
 			padding: 5px 5px 8px 5px;
@@ -134,14 +138,13 @@
 		}
 		
 		.adultsparks {
-			width: 1050px;
-			height: 78px;
+			width: 1005px;
+			height: 110px;
 			padding: 2px 2px 2px 2px;
 			background: #ecf0f1;
 			opacity: .95;
 			border: 2px solid #0B486B;
 			z-index: 5;
-			position: absolute;
 			border-radius: 5px;
 			/*            overflow-x: scroll;*/
 		}
@@ -157,12 +160,12 @@
 			color: #0B486B;
 			padding: 0px 0px 0px 0px;
 		}
-		/*
+		
 		#legend {
 			position: absolute;
-			right: 25px;
+			right: 15px;
 			height: 145px;
-			top: 15px;
+			bottom: 15px;
 			padding: 4px 4px 4px 4px;
 			background: #ecf0f1;
 			opacity: .95;
@@ -174,7 +177,6 @@
 			color: #0B486B;
 			text-align: center
 		}
-*/
 		
 		.clusterIcon {
 			display: block;
@@ -214,11 +216,10 @@
 		
 		#sparks {
 			position: fixed;
-			left: 0px;
+			left: 20px;
 			right: 0px;
-			bottom: 35px;
+			bottom: 15px;
 			z-index: 4;
-			margin: auto
 		}
 		
 		.info h3 {
@@ -232,15 +233,6 @@
 			box-sizing: content-box;
 		}
 		
-		.custom .leaflet-popup-tip,
-		.custom .leaflet-popup-content-wrapper {
-			background: #0B486B;
-			color: #ffffff;
-			opacity: .9;
-			font-size: 1.2em;
-			font-weight: bold;
-		}
-		
 		#leaflet-slider {
 			color: snow;
 			width: 500px;
@@ -248,7 +240,7 @@
 			font-size: 2em;
 			position: absolute;
 			left: 425px;
-			bottom: -6px;
+			bottom: 150px;
 			background: #0B486B
 		}
 		
@@ -259,15 +251,23 @@
 		.info {
 			padding: 6px 8px;
 			font: 14px/16px Arial, Helvetica, sans-serif;
-			background: white;
+			background: #ecf0f1;
 			background: rgba (255, 255, 255, 0.8);
 			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 			border-radius: 5px;
+			border: 2px solid #0B486B;
 		}
 		
 		.info h4 {
 			margin: 0 0 5px;
-			color: #777;
+			color: #0B486B;
+		}
+		
+		.donut {
+			z-index: 12;
+			position: absolute;
+			top: 5px;
+			right: 5px
 		}
 	</style>
 </head>
@@ -278,6 +278,8 @@
 	<script src="sparkline.js"></script>
 	<script src="SliderControl.js"></script>
 	<script src="B_winter_interval.js"></script>
+
+	<div id="donut-example" class="donut"></div>
 
 	<div id='about-button' class="container">
 		<h2>Language and Autism</h2>
@@ -310,20 +312,18 @@
 			<label> Child Vocalizations</br> per minute</label>
 		</p>
 		<p class="three"><span class="clusterIcon" style='background:#3498db;'></span>
-			<label> Total</br> Vocalizations</p>
+			<label> Total #</br> Vocalizations</p>
 		</label>
 		</p>
 	</div>
-
 
 	<div id=sparks class=adultsparks>
 		<span id="sparkline"></span>
 		<h5 style="float: left">11:30 AM</h5>
 		<h6 style="float: right">3:30 PM</h6>
-		<h4> Adult Vocalizations per Minute</h4>
+		<h4> Vocalizations per Minute</h4>
 
 	</div>
-
 
 	<div id='map'></div>
 
@@ -347,91 +347,87 @@
 
 		var sliderControl = null;
 
-		var dataLayer
-			//		
-			//		
-			//		
-			//		var commonStyles = {
-			//			weight: 1,
-			//			stroke: 1,
-			//			fillOpacity: .8
-			//		}
-			//
-			//		var layerInfo = {
-			//			adultLayer: {
-			//				source: "adult",
-			//				color: '#1f78b4'
-			//			},
-			//			peerLayer: {
-			//				source: "peer",
-			//				color: '#a6cee3'
-			//			},
-			//			childLayer: {
-			//				source: "child",
-			//				color: '#fff89e'
-			//			}
-			//		};
-			//
-			//		var radiusCircle = L.circle([0, 0], 500000, {
-			//			fillColor: false,
-			//			fillOpacity: .2,
-			//			stroke: false,
-			//			weight: 2,
-			//		}).addTo(map);
-			//
-			//		var geoJsonLayers = {};
-			//
-			//		for (var layer in layerInfo) {
-			//			geoJsonLayers[layer] = L.geoJson(vocalInterval, {
-			//				pointToLayer: function (feature, latlng) {
-			//					return L.circleMarker(latlng, commonStyles);
-			//				},
-			//				filter: function (feature) {
-			//					if (feature.properties[layerInfo[layer].source]) {
-			//						return feature;
-			//					}
-			//				},
-			//				style: function (feature) {
-			//					return {
-			//						color: layerInfo[layer].color,
-			//						fillColor: layerInfo[layer].color,
-			//						radius: getRadius(feature.properties[layerInfo[layer].source])
-			//					}
-			//				}
-			//				
-			//			}).addTo(map);
-			//			//add slider control for adult layer
-			//			sliderControl = L.control.sliderControl({
-			//				position: "topleft",
-			//				layer: layer,
-			//			});
-			//
-			//			sliderControl = L.control.sliderControl({
-			//				position: "bottomleft",
-			//				layer: layer,
-			//				timeAttribute: "time",
-			//				range: true
-			//			});
-			//			//Make sure to add the slider to the map ;-)
-			//			map.addControl(sliderControl);
-			//			//And initialize the slider
-			//			sliderControl.startSlider();
-			//		}
-			//
-			//		
-			//		
-			//		function getRadius(val) {
-			//			var radius = Math.sqrt(val / Math.PI);
-			//			return radius * 20;
-			//		}
+		//		
+		//		
+		//		
+		//		var commonStyles = {
+		//			weight: 1,
+		//			stroke: 1,
+		//			fillOpacity: .8
+		//		}
+		//
+		//		var layerInfo = {
+		//			adultLayer: {
+		//				source: "adult",
+		//				color: '#1f78b4'
+		//			},
+		//			peerLayer: {
+		//				source: "peer",
+		//				color: '#a6cee3'
+		//			},
+		//			childLayer: {
+		//				source: "child",
+		//				color: '#fff89e'
+		//			}
+		//		};
+		//
+		//		var radiusCircle = L.circle([0, 0], 500000, {
+		//			fillColor: false,
+		//			fillOpacity: .2,
+		//			stroke: false,
+		//			weight: 2,
+		//		}).addTo(map);
+		//
+		//		var geoJsonLayers = {};
+		//
+		//		for (var layer in layerInfo) {
+		//			geoJsonLayers[layer] = L.geoJson(vocalInterval, {
+		//				pointToLayer: function (feature, latlng) {
+		//					return L.circleMarker(latlng, commonStyles);
+		//				},
+		//				filter: function (feature) {
+		//					if (feature.properties[layerInfo[layer].source]) {
+		//						return feature;
+		//					}
+		//				},
+		//				style: function (feature) {
+		//					return {
+		//						color: layerInfo[layer].color,
+		//						fillColor: layerInfo[layer].color,
+		//						radius: getRadius(feature.properties[layerInfo[layer].source])
+		//					}
+		//				}
+		//				
+		//			}).addTo(map);
+		//			//add slider control for adult layer
+		//			sliderControl = L.control.sliderControl({
+		//				position: "topleft",
+		//				layer: layer,
+		//			});
+		//
+		//			sliderControl = L.control.sliderControl({
+		//				position: "bottomleft",
+		//				layer: layer,
+		//				timeAttribute: "time",
+		//				range: true
+		//			});
+		//			//Make sure to add the slider to the map ;-)
+		//			map.addControl(sliderControl);
+		//			//And initialize the slider
+		//			sliderControl.startSlider();
+		//		}
+		//		
+		//		function getRadius(val) {
+		//			var radius = Math.sqrt(val / Math.PI);
+		//			return radius * 20;
+		//		}
 
 
 		//
 		$.getJSON("B_winter_interval.geojson", function (json) {
 			drawMap(json);
+			processData(json);
 		});
-
-
 
 		function drawMap(circleData) {
 
@@ -446,7 +442,6 @@
 						fillOpacity: .5,
 					});
 				}
-
 			}).addTo(map);
 
 			//create circle markers with style for child vocalizations
@@ -463,24 +458,6 @@
 			}).addTo(map);
 			updateSymbols(adult, child, 1);
 
-			//add slider control for adult layer
-			sliderControl = L.control.sliderControl({
-				position: "topleft",
-				layer: adult,
-			});
-
-			sliderControl = L.control.sliderControl({
-				position: "bottomleft",
-				layer: adult,
-				timeAttribute: "time",
-				range: true
-			});
-			//Make sure to add the slider to the map ;-)
-			map.addControl(sliderControl);
-			//And initialize the slider
-			sliderControl.startSlider();
-
-			//add slider control for child layer
 
 		};
 
@@ -489,13 +466,14 @@
 			var allRadii = [];
 			var radius;
 			adult.eachLayer(function (layer) {
+				layer.bindPopup('Adult Vocalizations: ' + layer.feature.properties.adult);
 				radius = calcRadius(layer.feature.properties.adult);
 				layer.setRadius(radius)
 				allRadii.push(radius)
-
 			});
 
 			child.eachLayer(function (layer) {
+				layer.bindPopup('Child Vocalizations: ' + layer.feature.properties.child);
 				radius = calcRadius(layer.feature.properties.child);
 				layer.setRadius(radius)
 				allRadii.push(radius)
@@ -503,15 +481,14 @@
 		}
 
 		function calcRadius(val) {
-				var radius = Math.sqrt(val / Math.PI);
-				return radius * 8;
-			}
-			// use JQuery to load GeoJSON from an external file
+			var radius = Math.sqrt(val / Math.PI);
+			return radius * 8;
+		}
+
+		// use JQuery to load GeoJSON from an external file
 		$.getJSON("B_winter_park_clean.geojson", function (data) {
 			// add GeoJSON layer to the map once the file is loaded
 			//			console.log(data);
-
-
 
 			dataLayer = L.geoJson(data, {
 				pointToLayer: function (feature, latlng) {
@@ -521,15 +498,12 @@
 						fillColor: "#0B486B",
 						fillOpacity: .8,
 						minZoom: 5,
-						stroke: 0
-
+						stroke: 0,
 					})
 				}
-			})
-
+			});
 
 			//create clusters
-
 			var clusters = L.markerClusterGroup({
 				maxClusterRadius: 120,
 				//create custom icon
@@ -544,7 +518,6 @@
 						html: n,
 						className: 'mycluster',
 						iconSize: (40)
-
 					});
 				},
 
@@ -553,17 +526,17 @@
 				showCoverageOnHover: true,
 				zoomToBoundsOnClick: true,
 				polygonOptions: {
-					color: '#EC644B',
+					color: '#f1c40f',
 					stroke: 1,
 					fillOpacity: .7,
 				}
 			});
 			clusters.addLayer(dataLayer);
 			map.addLayer(clusters);
-			buildPopup(clusters);
+			buildInfo(clusters);
 		});
 
-		function buildPopup(clusters, dataLayer) {
+		function buildInfo(clusters, dataLayer) {
 			clusters.on('clustermouseover', function (a) {
 				var markers = a.layer.getAllChildMarkers();
 
@@ -592,7 +565,7 @@
 					'Child to Adult Vocalization Ratio: ' + ratio.toLocaleString();
 
 				var info = L.control();
-				
+
 				info.onAdd = function (map) {
 					this._div = L.DomUtil.create('div', 'info');
 					this.update();
@@ -602,28 +575,130 @@
 					this._div.innerHTML = '<h4>Language Data: </h4>' + html
 				};
 				info.addTo(map);
-				});
-		
-				clusters.on('clustermouseout', function () {
-					$(".info").hide();
+			});
+
+			clusters.on('clustermouseout', function () {
+				$(".info").hide();
 
 			});
+		};
+
+		function processData(json, circleData) {
+			//create empty array to push values into
+			var adultValueArray = []
+			var childValueArray = []
+			var timeValueArray = []
+			var peerValueArray = []
+
+
+
+
+
+			//loop through json and push adult and child values to array
+			for (var adultValue in json.features) {
+				var adultProp = json.features[adultValue].properties.adult;
+
+				adultValueArray.push(adultProp)
+			}
+			console.log(adultValueArray);
+
+			for (var childValue in json.features) {
+				var childProp = json.features[childValue].properties.child;
+
+				childValueArray.push(childProp)
+			}
+			//console.log(childValueArray);
+
+
+			for (var timeValue in json.features) {
+				var timeProp = json.features[timeValue].properties.time;
+
+				timeValueArray.push(timeProp)
+			}
+			
+			for (var peerValue in json.features) {
+				var peerProp = json.features[peerValue].properties.peer;
+
+				peerValueArray.push(peerProp)
+			}
+			//console.log(timeValueArray);
+
+
+			var adultSum = adultValueArray.reduce(function (a, b) {
+				return a + b;
+			}, 0);
+			console.log(adultSum);
+			var childSum = childValueArray.reduce(function (a, b) {
+				return a + b;
+			}, 0);
+			console.log(childSum);
+			var peerSum = peerValueArray.reduce(function (a, b) {
+				return a + b;
+			}, 0);
+			console.log(peerSum);
+
+			// Values to render
+			//		var adultValueArray = [21, 19, 15, 15, 10, 18, 16, 25, 19, 48, 53, 22, 30, 27, 28, 47, 18, 5, 7, 17, 2, 24, 27, 28, 2, 14, 23, 4, 5, 4, 6, 3, 10, 16, 0, 4, 2, 4, 16, 29, 34, 30, 36, 33, 24, 20, 2, 6, 5, 7, 8, 6, 5, 1, 14, 6, 9, 9, 4, 13, 8, 2, 0, 4, 8, 10, 3, 12, 14, 4, 1, 0, 0, 0, 1, 0, 1, 0, 8, 2, 4, 14, 8, 5, 7, 0, 4, 4, 1, 7, 9, 3, 7, 16, 8, 29, 3, 3, 1, 4, 7, 11, 0, 4, 0, 0, 2, 0, 7, 10, 0, 0, 1, 3, 4, 20, 1, 2, 2, 4, 0, 2, 2, 10, 20, 11, 5, 0, 0, 2, 0, 3, 17, 5, 7, 11, 5, 12, 10, 9, 16, 19, 36, 6, 21, 23, 16, 16, 30, 10, 17, 8, 10, 5, 5, 14, 15, 12, 9, 22, 19, 9, 29, 32, 37, 8, 35, 32, 16, 21, 17, 37, 51, 33, 20, 17, 24, 27, 46, 46, 39, 34, 10, 0, 5, 3, 2, 2, 8, 9, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 4, 4, 10, 1, 1, 1
+			//];
+
+			$('#sparkline').sparkline(adultValueArray, {
+				type: "line",
+				lineColor: '#16A085',
+				width: '1000px',
+
+				height: '80px',
+				minSpotColor: false,
+				maxSpotColor: '#f1c40f',
+				spotColor: '#f1c40f',
+				fillColor: false,
+				spotRadius: 4,
+				lineWidth: 3,
+				chartRangeMin: 0,
+				chartRangeMax: 53,
+				highlightLineColor: '#f1c40f'
+			});
+
+			// Draw a sparkline for the #sparkline element
+			$('#sparkline').sparkline(childValueArray, {
+				type: "line",
+				composite: true,
+				width: '1000px',
+				height: '80px',
+				minSpotColor: false,
+				maxSpotColor: '#f1c40f',
+				fillColor: false,
+				lineColor: '#e74c3c',
+				spotRadius: 4,
+				lineWidth: 3,
+				highlightLineColor: '#f1c40f',
+				chartRangeMin: 0,
+				chartRangeMax: 53
+			});
+
 		}
 
-		// Values to render
-		var adultValues = [21, 19, 15, 15, 10, 18, 16, 25, 19, 48, 53, 22, 30, 27, 28, 47, 18, 5, 7, 17, 2, 24, 27, 28, 2, 14, 23, 4, 5, 4, 6, 3, 10, 16, 0, 4, 2, 4, 16, 29, 34, 30, 36, 33, 24, 20, 2, 6, 5, 7, 8, 6, 5, 1, 14, 6, 9, 9, 4, 13, 8, 2, 0, 4, 8, 10, 3, 12, 14, 4, 1, 0, 0, 0, 1, 0, 1, 0, 8, 2, 4, 14, 8, 5, 7, 0, 4, 4, 1, 7, 9, 3, 7, 16, 8, 29, 3, 3, 1, 4, 7, 11, 0, 4, 0, 0, 2, 0, 7, 10, 0, 0, 1, 3, 4, 20, 1, 2, 2, 4, 0, 2, 2, 10, 20, 11, 5, 0, 0, 2, 0, 3, 17, 5, 7, 11, 5, 12, 10, 9, 16, 19, 36, 6, 21, 23, 16, 16, 30, 10, 17, 8, 10, 5, 5, 14, 15, 12, 9, 22, 19, 9, 29, 32, 37, 8, 35, 32, 16, 21, 17, 37, 51, 33, 20, 17, 24, 27, 46, 46, 39, 34, 10, 0, 5, 3, 2, 2, 8, 9, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 4, 4, 10, 1, 1, 1
-];
-
-		// Draw a sparkline for the #sparkline element
-		$('#sparkline').sparkline(adultValues, {
-			type: "bar",
-			width: '500px',
-			height: '50px',
-			minSpotColor: '#e74c3c',
-			maxSpotColor: '#e74c3c',
-			fillColor: "#e74c3c",
-
-
+		Morris.Donut({
+			element: 'donut-example',
+			data: [
+				{
+					label: "Adult Vocalizations",
+					value: 2386
+				},
+				{
+					label: "Child Vocalizations",
+					value: 756
+				},
+				{
+					label: "Peer Vocalizations",
+					value: 142
+				}
+  ],
+			labelColor: '#000000',
+			colors: [
+        '#16A085',
+        '#e74c3c',
+        '#f1c40f'
+    ],
 		});
 	</script>
 </body>
