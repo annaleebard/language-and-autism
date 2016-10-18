@@ -19,7 +19,7 @@
 
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-
+	<script src='https://unpkg.com/leaflet.marker.slideto@0.1.0/Leaflet.Marker.SlideTo.js'></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
@@ -51,7 +51,7 @@
 			top: 0;
 			height: 100%;
 			width: 100%;
-			left: 0px;
+			right: 0px;
 			z-index: 1;
 		}
 		
@@ -178,6 +178,10 @@
 			text-align: center
 		}
 		
+		#button {
+			z-index: 3
+		}
+		
 		.clusterIcon {
 			display: block;
 			border-radius: 50%;
@@ -292,18 +296,29 @@
 		</button>
 -->
 
-		<div id="info2" class="collapse">
-			<p>About the Data: </p>
-			<p>This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD.</p>
-		</div>
+
 
 		<div id="demo" class="collapse">
-			<p>About this Map:</p>
-			<p>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family. This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD. Map authored by: <a href="http://annaleebard.github.io/">Anna Bard</a>
-			</p>
-		</div>
-	</div>
 
+			<p><b>About the Map: </b>Rich language environments are crucial in language and social communication development for children with autism spectrum disorder (ASD). Children’s participation in community activities and adult vocalizations received while in the community are particularly effective in positively impacting development. This map visualizes languge a child with Autism experiences throughout a typical day with her family.
+			</p>
+			<p><b>Language Clusters: </b>This map identifies three major clusters of activity and visualizes the language expeienced at those locations. The buttons below direct the user to the language cluster of sigifigance for further exporation.</p>
+			<p>
+				<div>
+					<button id="Shopping">Shopping</button>
+					<button id="Home">Home</button>
+					<button id="Park">Park</button>
+				</div>
+			</p>
+
+			<p><b>The Data: </b>This data is the product of a research effort at the University of Kentucky led by Dwight Irvin, PhD, Joanne Rojas, PhD, and Ying Luo, PhD. </p>
+
+			<p><b>Map authored by: <a href="http://annaleebard.github.io/">Anna Bard</a></b>
+			</p>
+
+		</div>
+
+	</div>
 
 	<div id="legend">
 
@@ -337,10 +352,9 @@
 			zoomControl: false
 		})
 
-		var tiles = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
-			attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+		var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5uYWxlZWJhcmQiLCJhIjoiY2lrOHFpcGt5MDN6a3V2a245YWJ2enpzMiJ9.2bPK_dWaz3fkEtISPdvQog', {
 			subdomains: 'abcd',
-			minZoom: 0,
+			minZoom: 13,
 			maxZoom: 25,
 			ext: 'png'
 		});
@@ -348,6 +362,40 @@
 		map.addLayer(tiles);
 
 		var sliderControl = null;
+
+		var Shopping = [28.664741, -81.372415],
+			Home = [28.694178, -81.300212],
+			Park = [28.700748, -81.350957];
+
+
+		var speachIcon = L.icon({
+			iconUrl: 'speachSVG.svg',
+			iconSize: [160, 480]
+
+		})
+
+		var marker = L.marker([28.664741, -81.372415], {
+			fillOpacity: 0.5,
+		}).addTo(map);
+		
+		document.getElementById('Shopping').onclick = function () {
+			marker.slideTo(Shopping, {
+				duration: 500,
+				keepAtCenter: true
+			});
+		};
+		document.getElementById('Home').onclick = function () {
+			marker.slideTo(Home, {
+				duration: 500,
+				keepAtCenter: true
+			});
+		};
+		document.getElementById('Park').onclick = function () {
+			marker.slideTo(Park, {
+				duration: 500,
+				keepAtCenter: true
+			});
+		};
 
 		//		
 		//		
@@ -593,9 +641,6 @@
 			var peerValueArray = []
 
 
-
-
-
 			//loop through json and push adult and child values to array
 			for (var adultValue in json.features) {
 				var adultProp = json.features[adultValue].properties.adult;
@@ -617,7 +662,7 @@
 
 				timeValueArray.push(timeProp)
 			}
-			
+
 			for (var peerValue in json.features) {
 				var peerProp = json.features[peerValue].properties.peer;
 
@@ -658,7 +703,7 @@
 				chartRangeMin: 0,
 				chartRangeMax: 53,
 				highlightLineColor: '#f1c40f',
-				
+
 				highlightSpotColor: '#0B486B'
 			});
 
